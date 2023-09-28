@@ -1,0 +1,130 @@
+CREATE TABLE Diseases (
+		disc_id serial PRIMARY KEY,
+		disc_name VARCHAR(100),
+		disc_icdcode VARCHAR(10),
+		disc_desc VARCHAR(255),
+		disc_status VARCHAR(10)
+	);
+INSERT INTO Diseases (disc_id, disc_name, disc_icdcode, disc_desc, disc_status) VALUES
+(1, 'Influenza', 'J10', 'Respiratory infection caused by influenza viruses', 'Active'),
+(2, 'Hypertension', 'I10', 'High blood pressure', 'Active'),
+(3, 'Type 2 Diabetes', 'E11', 'Metabolic disorder resulting in high blood sugar', 'Active'),
+(4, 'Asthma', 'J45', 'Chronic respiratory disease causing breathing difficulties', 'Active'),
+(5, 'Osteoarthritis', 'M15', 'Degenerative joint disease', 'Active'),
+(6, 'Cancer', 'C50', 'Malignant tumor', 'Active'),
+(7, 'Heart Disease', 'I25', 'Various conditions affecting the heart', 'Active'),
+(8, 'Migraine', 'G43', 'Recurrent headaches', 'Active'),
+(9, 'Chronic Kidney Disease', 'N18', 'Progressive kidney damage', 'Active'),
+(10, 'Alzheimer''s Disease', 'G30', 'Neurodegenerative disease causing memory loss', 'Active');
+
+
+=======================================================================================================================================
+
+
+CREATE TABLE InsurancePackageCoveredDiseases (
+    insp_id INT,
+    disc_id INT,
+    PRIMARY KEY (insp_id, disc_id),
+    FOREIGN KEY (insp_id) REFERENCES InsurancePackages(insp_id),
+    FOREIGN KEY (disc_id) REFERENCES Diseases(disc_id)
+);
+
+-- Insert data for Basic Health Insurance
+INSERT INTO InsurancePackageCoveredDiseases (insp_id, disc_id)
+VALUES
+(1, 1), -- Basic Health Insurance covers Influenza
+(1, 2), -- Basic Health Insurance covers Hypertension
+(1, 3); -- Basic Health Insurance covers Type 2 Diabetes
+
+-- Insert data for Term Life Insurance
+INSERT INTO InsurancePackageCoveredDiseases (insp_id, disc_id)
+VALUES
+(2, 6), -- Term Life Insurance covers Cancer
+(2, 7), -- Term Life Insurance covers Heart Disease
+(2, 8); -- Term Life Insurance covers Migraine
+
+-- Insert data for Health Insurance Plan A
+INSERT INTO InsurancePackageCoveredDiseases (insp_id, disc_id)
+VALUES
+(3, 1), -- Health Insurance Plan A covers Influenza
+(3, 2), -- Health Insurance Plan A covers Hypertension
+(3, 4); -- Health Insurance Plan A covers Asthma
+
+-- Insert data for Family Health Insurance
+INSERT INTO InsurancePackageCoveredDiseases (insp_id, disc_id)
+VALUES
+(4, 1), -- Family Health Insurance covers Influenza
+(4, 2), -- Family Health Insurance covers Hypertension
+(4, 5); -- Family Health Insurance covers Osteoarthritis
+
+-- Insert data for Senior Health Insurance
+INSERT INTO InsurancePackageCoveredDiseases (insp_id, disc_id)
+VALUES
+(5, 1), -- Senior Health Insurance covers Influenza
+(5, 2), -- Senior Health Insurance covers Hypertension
+(5, 7); -- Senior Health Insurance covers Heart Disease
+
+-- Insert data for Student Health Insurance
+INSERT INTO InsurancePackageCoveredDiseases (insp_id, disc_id)
+VALUES
+(6, 1), -- Student Health Insurance covers Influenza
+(6, 2), -- Student Health Insurance covers Hypertension
+(6, 8); -- Student Health Insurance covers Migraine
+
+
+==================================================================================================================================================
+
+
+
+
+
+
+
+
+CREATE TABLE InsurancePackageCategories (
+    ipcc_id serial PRIMARY KEY,
+    ipcc_title varchar(60) NOT NULL,
+    ipcc_desc varchar(500),
+    ipcc_status char(2)
+);
+
+
+
+
+-- Insert records into InsurancePackageCategories
+INSERT INTO InsurancePackageCategories (ipcc_title, ipcc_desc, ipcc_status)
+VALUES
+    ('Room Rent', 'Coverage for room rent charges', 'AC'),
+    ('Doctor Consultation Charges', 'Coverage for doctor consultation fees', 'AC'),
+    ('Pharmacy', 'Coverage for pharmacy expenses', 'AC'),
+    ('Surgery', 'Coverage for surgical procedures', 'AC'),
+    ('Lab Tests', 'Coverage for laboratory tests', 'AC'),
+    ('Hospitalization', 'Coverage for hospitalization expenses', 'AC'),
+    ('Emergency Care', 'Coverage for emergency medical care', 'AC'),
+    ('Ambulance Services', 'Coverage for ambulance services', 'AC'),
+    ('Mental Health Services', 'Coverage for mental health services', 'AC'),
+    ('Dental Services', 'Coverage for dental services', 'AC');
+
+=================================================================================================================================================================
+
+CREATE TABLE InsurancePackageCoveragecategories (
+    insp_id int,
+    ipcc_id serial,
+    PRIMARY KEY (insp_id, ipcc_id),
+    FOREIGN KEY (insp_id) REFERENCES insurancepackages(insp_id),
+    FOREIGN KEY (ipcc_id) REFERENCES InsurancePackageCoverageCategories(ipcc_id)
+);
+
+-- Insert records into InsurancePackageCoverage with random insp_id and ipcc_id values
+INSERT INTO InsurancePackageCoveragecategories (insp_id, ipcc_id)
+VALUES
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 4),
+    (5, 5),
+    (6, 6),
+    (7, 7),
+    (8, 8),
+    (9, 9),
+    (10, 10);
